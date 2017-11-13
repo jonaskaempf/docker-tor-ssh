@@ -1,0 +1,36 @@
+# Description
+
+Docker image running tor hidden service that 
+exposes sshd.
+
+# Build instructions
+
+Create client ssh key:
+
+    $ ssh-keygen -t ed25519 -C "" -f client_key
+    $ cp client_key.pub img/
+
+Build docker image:
+
+    $ cd img
+    $ docker build -t <tag> .
+
+Launch:
+
+    $ docker run -d [-v <host folder>:/home/user/mnt] <tag>
+
+Check server key fingerprint and Tor hidden service address:
+
+    $ docker logs <container name>
+    Generating server keys...
+    ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519 
+    Key fingerprint:
+    <FINGERPRINT>
+
+    Enabling account 'user'...
+    Setting up tor...
+    <SNIP>
+    Waiting for tor:
+    ....... Done
+
+    Your .onion sshd: <ONION ADDRESS> port 9999
